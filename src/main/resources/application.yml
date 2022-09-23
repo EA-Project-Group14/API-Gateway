@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: commentService
+          uri: lb://commentService
+          predicates:
+            - Path=/comments/**
+        - id: posts-service
+          uri: lb://posts-service
+          predicates:
+            - Path=/posts/**
+
+server:
+  port: 80
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:8761/eureka
