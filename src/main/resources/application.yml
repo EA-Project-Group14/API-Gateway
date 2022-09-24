@@ -9,6 +9,8 @@ spring:
           lower-case-service-id: true
       routes:
         - id: commentService
+          filters:
+            - MyFilterFactory
           uri: lb://commentService
           predicates:
             - Path=/comments/**
@@ -16,6 +18,14 @@ spring:
           uri: lb://posts-service
           predicates:
             - Path=/posts/**
+          filters:
+            - MyFilterFactory
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+jwt:
+  secret: secretkey
 
 server:
   port: 80
